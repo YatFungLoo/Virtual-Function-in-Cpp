@@ -12,23 +12,26 @@ class Fruit {
 };
 
 class Fruit2 : public Fruit {
-    using Fruit::Fruit;
-
   public:
+    Fruit2(std::string s) : Fruit(s) {}
     void whatAmI() { std::cout << "please dont talk to me again." << std::endl; }
-    void whatAmI_plus() { std::cout << "Dont talk to me plase." << std::endl; }
 };
 
-// Helper function
+// Function overloading
 void func(Fruit &f) { f.whatAmI(); }
 void func(Fruit *f) { f->whatAmI(); }
 
+void ref(Fruit &f) { f.whatAmI(); } // Pass by reference
+void val(Fruit f) { f.whatAmI(); } // Pass by value
+
 int main() {
-    Fruit fruit("orange");
-    fruit.whatAmI();
-    Fruit2 *f = new Fruit2("banana");
-    func(f);
-    Fruit2 f2("Walter White");
-    func(f2);
+    // Fruit fruit("fruit");
+    // fruit.whatAmI();
+    Fruit2 f("fruit 2");
+    f.whatAmI();
+    ref(f);
+    val(f);
+    // Fruit2 f2("fruit 3");
+    // func(f2);
     return 0;
 }

@@ -14,9 +14,9 @@ Short write up on two function the `virtual` keywords has when dealing with inhe
 
 ## Short Summary
 
-One can create a new (sub)class that inheriate properties of another class (base class), which allow the new (sub)class access/ call the functions that exist within the base class.
+One can create a new (sub)class that inherit properties of another class (base class), allowing (sub)class access/ call to the functions that exist the base class.
 
-C++ allows (sub)class function to be overwritten, in condition that the base class markes that specific overwritten function with the `virtual` keywards.
+Base class function can be overwritten in subclass, in condition that the function is marked with the `virtual` keyword.
 
 ``` cpp
   public:
@@ -25,32 +25,32 @@ C++ allows (sub)class function to be overwritten, in condition that the base cla
     void whatAmI() { std::cout << myName << std::endl; } // subclass WILL use this instead of its own whatAmI()
 ```
 
-Play around with the provided code and see for yourself.
-
 ## The Diamond Pattern Problem
 
-C++ supports multiple class inheritance, a new subclass can inherate multiple classes that can have base classes.
+C++ supports multiple class inheritance, a new subclass can inherit multiple classes that can have base classes.
 
-> This problem can also be resolved by using unique name for inherated function.
+Problem occurs when sub-class inherit two copies of the same base class, which can be addressed by virtual inheritance, ensuring only one copy of the base class exist.
+
+> This problem can also be resolved by using unique name for inherited function.
 
 ``` cpp
 class base {
 	public: 
-	  func() { std::println("Hello"); }
-}
+	  void func() { std::println("Hello"); }
+};
 
-class class1 : public base { ... } // --> Ambiguity error if func() is called!
-class class2 : public base { ... }
+class class1 : public base { ... }
+class class2 : public base { ... } // --> Ambiguity error if func() is called!
 
-class class1 : public base { ... } // --> Okay!!!
-class class2 : public base { ... }
+class class1 : virtual public base { ... }
+class class2 : virtual public base { ... } // --> Okay!!!
 
-class subclass : public class1 : public clsas2 { ... }
+class subclass : public class1, public class2 { ... }
 
 int main() {
-	subclass *sb = new subclass();
-	sb->func();
-	return 0;
+  subclass obj;
+  obj.func();
+  return 0;
 }
 ```
 ## How To Run The Code
@@ -59,13 +59,13 @@ Tested with Apple clang 16.0.0.
 
 First `cd`/ visit the base directory.
 
-To compile/recompile the program and run the exectable, run
+To compile/recompile the program and run the executable, run
 
 ```bash
 make && ./Virtual
 ```
 
-To delete the exectable, run
+To delete the executable, run
 
 ```bash
 make clean
