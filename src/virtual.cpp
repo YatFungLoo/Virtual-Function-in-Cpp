@@ -22,16 +22,55 @@ void func(Fruit &f) { f.whatAmI(); }
 void func(Fruit *f) { f->whatAmI(); }
 
 void ref(Fruit &f) { f.whatAmI(); } // Pass by reference
-void val(Fruit f) { f.whatAmI(); } // Pass by value
+void val(Fruit f) { f.whatAmI(); }  // Pass by value
+
+template <typename T> struct temp_a {
+    template <typename U> void print() { std::cout << "template a" << std::endl; } // Cannot be virtual!
+};
+
+class a {
+  public:
+    a() = default;
+    virtual void print() { std::cout << "class a" << std::endl; }
+    virtual void printWithDef(char c = 'a' ) { std::cout << "class a, def: " << c << std::endl; }
+};
+
+class b : public a {
+  public:
+    b() = default;
+    virtual void print() { std::cout << "class b" << std::endl; }
+    virtual void printWithDef(char c = 'b' ) { std::cout << "class b, def: " << c << std::endl; }
+};
 
 int main() {
-    // Fruit fruit("fruit");
-    // fruit.whatAmI();
+    /* static vs dymainc */
+    a *A = new a();
+    A->printWithDef();
+
+    a *B1 = new b();
+    B1->printWithDef();
+
+    b B2;
+    B2.printWithDef();
+
+    /*
+    output:
+    class a, def: a
+    class b, def: a
+    class b, def: b
+     */
+
+    /* template */
+    temp_a<int> A1;
+    A1.print<int>();
+
+    /* virtual */
+    Fruit fruit("fruit");
+    fruit.whatAmI();
+
     Fruit2 f("fruit 2");
-    f.whatAmI();
     ref(f);
     val(f);
-    // Fruit2 f2("fruit 3");
-    // func(f2);
+
     return 0;
 }

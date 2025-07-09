@@ -53,6 +53,19 @@ int main() {
   return 0;
 }
 ```
+
+## Static And Dynamic Binding
+
+Given two classes `a` and `b`, where `b` is a derived class of `a` and both class has a function with default parameter called `func( char c = 'a/b' )` that are virtual. Initialing a pointer of class `a` to an object of class `b` while calling `func()` will invoke class `b`'s `func()` due to run-time polymorphism, however since default parameter are determined at compile-time the pointer will use `a` instead of `b` even though it is an object of class `b`.
+
+> avoid default parameter with virtual functions
+
+## Virtual Template Function
+
+Virtual functions are not allowed within template function, this is due to the implementation of virtual within C++. Template are generated at *compile-time* while virtual functions are determined at *run-time*.
+
+The implementation of virtual function uses at fixed-size table (vtable) with one entry per virtual functions, however number of instantiations of member function template is not fixed until the entire program has been translated. Infinite sized vtable is not possible. [Reference](https://stackoverflow.com/a/27709454/21802859)
+
 ## How To Run The Code
 
 Tested with Apple clang 16.0.0.
@@ -70,3 +83,6 @@ To delete the executable, run
 ```bash
 make clean
 ```
+
+<!--  LocalWords:  whatAmI myName func int obj polymorphism vtable cd
+ -->
