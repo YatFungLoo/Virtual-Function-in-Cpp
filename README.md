@@ -54,6 +54,10 @@ int main() {
 }
 ```
 
+## Object Slicing
+
+A derived object has base class part and derived class part. An object is always instantiated as a complete type known at compile-time, when a base class reference/pointer is used to point to an instantiated derived object (whether stack via `derived d;` or heap via `new derived();`), the base pointer can only access base class part of the object, and not the derived class part, however the derived class part of the object still exist.
+
 ## Static And Dynamic Binding
 
 Given two classes `a` and `b`, where `b` is a derived class of `a` and both class has a function with default parameter called `func( char c = 'a/b' )` that are virtual. Initialing a pointer of class `a` to an object of class `b` while calling `func()` will invoke class `b`'s `func()` due to run-time polymorphism, however since default parameter are determined at compile-time the pointer will use `a` instead of `b` even though it is an object of class `b`.
